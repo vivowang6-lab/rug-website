@@ -3,60 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>地毯资讯智能体 - 地毯周刊</title>
+    <title>地毯周刊 - AI智能内容平台</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background-color: #0a0a0a; 
-            color: white; 
-            font-family: 'Inter', sans-serif;
-        }
+        body { background-color: #0a0a0a; color: white; font-family: 'Inter', sans-serif; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .text-red { color: #e30614; }
         .bg-red { background-color: #e30614; }
-        .glass { 
-            background: rgba(255,255,255,0.03); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .magazine-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .badge-new {
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(227, 6, 20, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(227, 6, 20, 0); }
-        }
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white; color: black; }
-            .glass { background: white; border: 1px solid #ddd; }
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #e30614;
-        }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
+        .magazine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .badge-new { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0%, 100% { box-shadow: 0 0 0 0 rgba(227, 6, 20, 0.4); } 50% { box-shadow: 0 0 0 8px rgba(227, 6, 20, 0); } }
+        .loading { border: 3px solid rgba(255,255,255,0.1); border-left-color: #e30614; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="min-h-screen">
 
     <!-- 导航 -->
-    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur border-b border-white/10 z-50 no-print">
+    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur border-b border-white/10 z-50">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-red rounded-lg flex items-center justify-center">
@@ -67,12 +33,9 @@
                 <span class="font-bold text-lg tracking-wide">地毯周刊</span>
             </div>
             <div class="hidden md:flex gap-8 text-sm text-gray-400">
-                <a href="#latest" class="hover:text-white transition">最新</a>
+                <a href="#latest" class="hover:text-white transition">实时新品</a>
                 <a href="#magazine" class="hover:text-white transition">本周杂志</a>
-                <a href="#content-studio" class="hover:text-white transition">AI内容工坊</a>
-                <a href="#visual-search" class="hover:text-white transition">以图搜图</a>
-                <a href="#trends" class="hover:text-white transition">趋势</a>
-                <a href="#manage" class="hover:text-white transition">管理</a>
+                <a href="#manage" class="hover:text-white transition">监控管理</a>
             </div>
         </div>
     </nav>
@@ -82,20 +45,18 @@
         <div class="max-w-7xl mx-auto text-center">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 border border-red/20 text-red text-sm mb-6">
                 <span class="w-2 h-2 bg-red rounded-full animate-pulse"></span>
-                实时监控 50+ 顶级品牌 · 刚刚更新 6 款新品
+                <span id="status-text">连接数据库中...</span>
             </div>
             <h1 class="font-serif text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tight">
                 地毯<span class="text-red">周刊</span>
             </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-                每周精选全球顶级地毯品牌新品，AI 智能提取设计灵感与搭配方案
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+                实时监控全球顶级地毯品牌，AI智能分类与内容生成
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 no-print">
-                <a href="#latest" class="bg-red hover:bg-red-700 px-8 py-3 rounded-xl transition uppercase tracking-wider text-sm font-medium">
-                    查看实时新品
-                </a>
-                <button onclick="document.getElementById('email-modal').classList.remove('hidden')" class="border border-white/30 hover:bg-white/10 px-8 py-3 rounded-xl transition uppercase tracking-wider text-sm">
-                    订阅推送
+            <div class="flex justify-center gap-4">
+                <a href="#latest" class="bg-red hover:bg-red-700 px-8 py-3 rounded-xl transition font-medium">查看实时新品</a>
+                <button onclick="document.getElementById('add-modal').classList.remove('hidden')" class="border border-white/30 hover:bg-white/10 px-8 py-3 rounded-xl transition">
+                    + 添加新品
                 </button>
             </div>
         </div>
@@ -104,699 +65,271 @@
     <!-- 实时新品 -->
     <section id="latest" class="py-20 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+            <div class="flex justify-between items-end mb-12">
                 <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red text-white text-xs font-bold badge-new">
-                            LIVE
-                        </span>
-                        <span class="text-red text-sm tracking-wider font-medium">NEW ARRIVALS</span>
-                    </div>
-                    <h2 class="font-serif text-4xl md:text-5xl font-bold">实时新品</h2>
-                    <p class="text-gray-400 mt-2">刚刚从全球顶级品牌抓取的最新地毯设计，每小时更新</p>
+                    <span class="text-red text-sm tracking-wider font-medium">NEW ARRIVALS</span>
+                    <h2 class="font-serif text-4xl font-bold mt-2">实时新品</h2>
+                    <p class="text-gray-400 mt-2">来自数据库的最新数据</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="text-sm text-gray-500">排序：</span>
-                    <select id="sort-new-arrivals" onchange="sortNewArrivals()" class="bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-red focus:outline-none">
-                        <option value="newest">最新上架</option>
-                        <option value="price-asc">价格：低到高</option>
-                        <option value="price-desc">价格：高到低</option>
-                    </select>
-                    <button onclick="refreshNewArrivals()" class="p-2 rounded-lg hover:bg-white/5 border border-white/10 transition" title="刷新">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    </button>
-                </div>
+                <button onclick="loadCarpets()" class="p-2 rounded-lg hover:bg-white/5 border border-white/10 transition" title="刷新">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
             </div>
             
-            <div id="products-grid" class="magazine-grid">
+            <div id="loading-indicator" class="flex justify-center py-20">
+                <div class="loading"></div>
+            </div>
+            
+            <div id="products-grid" class="magazine-grid hidden">
                 <!-- 动态加载 -->
             </div>
-            
-            <div class="mt-8 text-center">
-                <button onclick="loadMoreNewArrivals()" class="px-8 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition text-sm">
-                    加载更多新品
-                </button>
-            </div>
         </div>
     </section>
 
-    <!-- 本周杂志 -->
-    <section id="magazine" class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-black to-gray-900">
-        <div class="max-w-5xl mx-auto">
-            <!-- 杂志封面 -->
-            <div class="relative mb-16 p-12 border border-white/20 bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-2xl overflow-hidden" id="magazine-cover">
-                <div class="absolute top-4 left-4 text-xs tracking-[0.3em] text-red">ISSUE <span id="issue-no">01</span></div>
-                <div class="absolute top-4 right-4 text-xs tracking-wider text-gray-500" id="cover-date">2024.01</div>
-                
-                <div class="text-center py-20">
-                    <h2 class="font-serif text-7xl md:text-9xl font-bold mb-4">VOGUE</h2>
-                    <p class="text-2xl tracking-[0.5em] text-gray-400 uppercase mb-8">Carpet Edition</p>
-                    <div class="w-24 h-px bg-red mx-auto mb-8"></div>
-                    <p class="text-gray-500 max-w-md mx-auto">
-                        本期精选 <span id="cover-count" class="text-white">12</span> 款设计师地毯
-                        <br>来自 The Rug Company & Tai Ping
-                    </p>
-                </div>
-            </div>
-
-            <!-- 杂志内容 -->
-            <div id="magazine-content" class="space-y-16">
-                <!-- 动态插入内容 -->
-            </div>
-
-            <!-- 下载按钮 -->
-            <div class="text-center mt-16 no-print">
-                <button onclick="window.print()" class="bg-red hover:bg-red-700 px-12 py-4 rounded-xl transition uppercase tracking-wider font-medium">
-                    下载本期 PDF
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI内容工坊 -->
-    <section id="content-studio" class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f]">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="inline-block px-4 py-1 rounded-full bg-red/10 text-red text-sm mb-4">AI CONTENT STUDIO</span>
-                <h2 class="text-3xl lg:text-4xl font-bold mb-4">AI 内容自动化生产</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">一键生成小红书/Instagram 高质量内容，自动匹配场景风格</p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- 左侧：输入区 -->
-                <div class="glass rounded-xl p-6 space-y-6">
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2">1. 选择地毯产品</label>
-                        <select id="studio-carpet" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-red focus:outline-none">
-                            <option value="">请选择...</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-3">2. 选择平台</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" onclick="selectStudioPlatform('xiaohongshu')" id="btn-xiaohongshu" class="studio-platform p-4 rounded-lg border border-white/10 hover:border-red/50 transition text-center">
-                                <div class="text-2xl mb-1">📕</div>
-                                <div class="text-sm font-medium">小红书</div>
-                                <div class="text-xs text-gray-500 mt-1">生活方式种草</div>
-                            </button>
-                            <button type="button" onclick="selectStudioPlatform('instagram')" id="btn-instagram" class="studio-platform p-4 rounded-lg border border-white/10 hover:border-red/50 transition text-center">
-                                <div class="text-2xl mb-1">📷</div>
-                                <div class="text-sm font-medium">Instagram</div>
-                                <div class="text-xs text-gray-500 mt-1">视觉美学展示</div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-3">3. 选择场景风格</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button type="button" onclick="selectStudioScene('modern')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">现代极简</button>
-                            <button type="button" onclick="selectStudioScene('luxury')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">奢华别墅</button>
-                            <button type="button" onclick="selectStudioScene('cozy')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">温馨家居</button>
-                            <button type="button" onclick="selectStudioScene('artistic')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">艺术空间</button>
-                            <button type="button" onclick="selectStudioScene('nordic')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">北欧风</button>
-                            <button type="button" onclick="selectStudioScene('chinese')" class="studio-scene px-3 py-2 rounded-lg border border-white/10 text-sm hover:border-red/50 transition">新中式</button>
-                        </div>
-                    </div>
-
-                    <button onclick="generateStudioContent()" class="w-full bg-red hover:bg-red-700 py-3 rounded-lg transition font-medium flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        生成内容
-                    </button>
-                </div>
-
-                <!-- 右侧：输出区 -->
-                <div class="glass rounded-xl p-6">
-                    <h3 class="font-medium mb-4 flex items-center gap-2">
-                        <span>生成结果</span>
-                        <span id="studio-status" class="text-xs text-gray-500"></span>
-                    </h3>
-                    <div id="studio-output" class="space-y-4 min-h-[400px]">
-                        <div class="flex flex-col items-center justify-center h-full text-gray-500 py-20">
-                            <svg class="w-16 h-16 mb-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                            <p>选择参数后点击生成</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 以图搜图 -->
-    <section id="visual-search" class="py-20 px-6 border-t border-white/10">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="inline-block px-4 py-1 rounded-full bg-red/10 text-red text-sm mb-4">VISUAL SEARCH</span>
-            <h2 class="text-3xl lg:text-4xl font-bold mb-4">以图搜图</h2>
-            <p class="text-gray-400 mb-8">上传心仪地毯图片，AI 立即找到相似款</p>
-            
-            <div class="glass rounded-2xl p-12 border-2 border-dashed border-white/20 hover:border-red/50 transition cursor-pointer relative" onclick="document.getElementById('search-upload').click()">
-                <input type="file" id="search-upload" class="hidden" accept="image/*" onchange="handleVisualSearch(this)">
-                <svg class="w-20 h-20 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                <p class="text-lg mb-2">点击上传图片或拖拽至此</p>
-                <p class="text-sm text-gray-500">支持 JPG、PNG 格式，最大 10MB</p>
-            </div>
-
-            <div id="search-results" class="mt-8 hidden">
-                <h3 class="text-left text-lg font-medium mb-4">找到相似地毯</h3>
-                <div class="grid md:grid-cols-3 gap-4" id="similar-products"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 趋势报告 -->
-    <section id="trends" class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f]">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
-                <div>
-                    <span class="inline-block px-4 py-1 rounded-full bg-red/10 text-red text-sm mb-4">TREND FORECAST</span>
-                    <h2 class="text-3xl lg:text-4xl font-bold">AI 趋势预测</h2>
-                </div>
-                <span class="text-sm text-gray-500">基于全球社交媒体数据分析</span>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-12">
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="text-4xl mb-2">🔥</div>
-                    <h3 class="font-medium mb-1">本季流行色</h3>
-                    <p class="text-2xl text-red font-serif">暖沙色</p>
-                    <p class="text-sm text-gray-500 mt-2">Pinterest 搜索 +240%</p>
-                </div>
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="text-4xl mb-2">📈</div>
-                    <h3 class="font-medium mb-1">热门图案</h3>
-                    <p class="text-2xl text-red font-serif">抽象几何</p>
-                    <p class="text-sm text-gray-500 mt-2">Instagram 标签 +180%</p>
-                </div>
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="text-4xl mb-2">🎯</div>
-                    <h3 class="font-medium mb-1">下季预测</h3>
-                    <p class="text-2xl text-red font-serif">复古波斯</p>
-                    <p class="text-sm text-gray-500 mt-2">小红书笔记 +320%</p>
-                </div>
-            </div>
-
-            <div class="glass rounded-xl p-6">
-                <h3 class="font-medium mb-6">2024 地毯趋势报告 Q1</h3>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                        <div class="w-12 h-12 bg-red/20 rounded-full flex items-center justify-center text-red font-bold">1</div>
-                        <div class="flex-1">
-                            <h4 class="font-medium">自然材质回归</h4>
-                            <p class="text-sm text-gray-400">羊毛、棉麻、黄麻等天然材质搜索量增长 156%</p>
-                        </div>
-                        <span class="text-green-500 text-sm">↑ 156%</span>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                        <div class="w-12 h-12 bg-red/20 rounded-full flex items-center justify-center text-red font-bold">2</div>
-                        <div class="flex-1">
-                            <h4 class="font-medium">大尺寸地毯</h4>
-                            <p class="text-sm text-gray-400">3m x 4m 以上大尺寸需求增长，适合开放式空间</p>
-                        </div>
-                        <span class="text-green-500 text-sm">↑ 89%</span>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                        <div class="w-12 h-12 bg-red/20 rounded-full flex items-center justify-center text-red font-bold">3</div>
-                        <div class="flex-1">
-                            <h4 class="font-medium">渐变色彩</h4>
-                            <p class="text-sm text-gray-400">从中心向边缘渐变的色彩设计成为新宠</p>
-                        </div>
-                        <span class="text-green-500 text-sm">↑ 67%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 管理 -->
-    <section id="manage" class="py-20 px-6 border-t border-white/10 no-print">
+    <!-- 监控源管理 -->
+    <section id="manage" class="py-20 px-6 border-t border-white/10">
         <div class="max-w-3xl mx-auto">
-            <p class="text-red text-sm tracking-wider mb-2">MANAGE</p>
-            <h2 class="font-serif text-4xl mb-8">监控源管理</h2>
-            <div class="glass rounded-lg p-6 mb-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-medium">已监控网站</h3>
-                    <button onclick="addWebsite()" class="bg-red hover:bg-red-700 px-4 py-2 rounded-lg text-sm transition">+ 添加网站</button>
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <span class="text-red text-sm tracking-wider font-medium">MONITOR</span>
+                    <h2 class="font-serif text-4xl font-bold mt-2">监控源管理</h2>
                 </div>
-                <ul id="website-list" class="space-y-3">
-                    <li class="flex justify-between items-center py-3 border-b border-white/10">
-                        <div>
-                            <p class="font-medium">The Rug Company</p>
-                            <p class="text-sm text-gray-500">therugcompany.com</p>
-                        </div>
-                        <span class="flex items-center gap-1 text-green-500 text-sm">
-                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                            正常
-                        </span>
-                    </li>
-                    <li class="flex justify-between items-center py-3 border-b border-white/10">
-                        <div>
-                            <p class="font-medium">Tai Ping</p>
-                            <p class="text-sm text-gray-500">taipingcarpets.com</p>
-                        </div>
-                        <span class="flex items-center gap-1 text-green-500 text-sm">
-                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                            正常
-                        </span>
-                    </li>
-                </ul>
+                <button onclick="document.getElementById('source-modal').classList.remove('hidden')" class="bg-red hover:bg-red-700 px-4 py-2 rounded-lg text-sm transition">
+                    + 添加监控网站
+                </button>
+            </div>
+            
+            <div class="glass rounded-2xl p-6">
+                <div id="sources-list" class="space-y-3">
+                    <div class="text-center text-gray-500 py-8">加载中...</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 订阅弹窗 -->
-    <div id="email-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6">
-        <div class="glass rounded-lg p-8 max-w-md w-full relative">
-            <button onclick="document.getElementById('email-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-white">
+    <!-- 添加新品模态框 -->
+    <div id="add-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6">
+        <div class="glass rounded-2xl p-8 max-w-md w-full relative max-h-[90vh] overflow-y-auto">
+            <button onclick="document.getElementById('add-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-white">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <h3 class="font-serif text-2xl mb-4">订阅地毯周刊</h3>
-            <p class="text-gray-400 mb-6">每周一早上9点，最新杂志直达邮箱</p>
-            <input type="email" placeholder="your@email.com" class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 mb-4 text-white placeholder-gray-600 focus:border-red focus:outline-none">
-            <div class="flex gap-3">
-                <button onclick="subscribe()" class="flex-1 bg-red hover:bg-red-700 py-3 rounded-lg transition">订阅</button>
-                <button onclick="document.getElementById('email-modal').classList.add('hidden')" class="flex-1 border border-white/20 hover:bg-white/10 py-3 rounded-lg transition">取消</button>
-            </div>
+            <h3 class="font-serif text-2xl mb-6">添加新品地毯</h3>
+            <form id="add-carpet-form" class="space-y-4">
+                <input type="text" name="name" placeholder="产品名称" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <input type="text" name="brand" placeholder="品牌" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <input type="text" name="price" placeholder="价格 (如: ¥25,000)" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <input type="url" name="image_url" placeholder="图片链接 (https://...)" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <select name="material" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                    <option value="">选择材质</option>
+                    <option value="羊毛">羊毛</option>
+                    <option value="真丝">真丝</option>
+                    <option value="棉麻">棉麻</option>
+                    <option value="混纺">混纺</option>
+                </select>
+                <input type="text" name="style" placeholder="风格 (如: 现代/波斯/北欧)" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <textarea name="description" placeholder="产品描述" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none"></textarea>
+                <button type="submit" class="w-full bg-red hover:bg-red-700 py-3 rounded-lg transition font-medium">提交</button>
+            </form>
         </div>
     </div>
 
-    <!-- JavaScript 代码 -->
-    <script>
-        // 地毯数据
-        const carpetData = [
-            {
-                id: 1,
-                name: 'Heritage Mohair',
-                brand: 'The Rug Company',
-                price: '¥85,000',
-                desc: '手工编织的马海毛地毯，融合传统工艺与现代设计，柔软的触感与独特的光泽感。',
-                image: 'https://images.unsplash.com/photo-1600164318544-79e50b5b488f?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800',
-                material: '马海毛',
-                style: '现代',
-                scene: '客厅',
-                colors: ['米色', '棕色'],
-                aiAnalysis: '适合搭配极简主义家具，营造温暖氛围'
-            },
-            {
-                id: 2,
-                name: 'Silk Spectrum',
-                brand: 'Tai Ping',
-                price: '¥128,000',
-                desc: '纯丝手工地毯，渐变色彩设计，为空间注入艺术气息。',
-                image: 'https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800',
-                material: '真丝',
-                style: '奢华',
-                scene: '卧室',
-                colors: ['蓝色', '金色'],
-                aiAnalysis: '奢华质感的最佳选择，适合主卧空间'
-            },
-            {
-                id: 3,
-                name: 'Nordic Geometric',
-                brand: 'Nordic Knots',
-                price: '¥12,500',
-                desc: '几何图案羊毛地毯，简约现代风格，适合极简主义空间。',
-                image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800',
-                material: '羊毛',
-                style: '北欧',
-                scene: '客厅',
-                colors: ['灰色', '白色'],
-                aiAnalysis: '北欧风格的完美搭配，提升空间明亮度'
-            },
-            {
-                id: 4,
-                name: 'Persian Revival',
-                brand: 'CarpetVista',
-                price: '¥45,000',
-                desc: '传统波斯图案的现代演绎，手工打结工艺，收藏级品质。',
-                image: 'https://images.unsplash.com/photo-1602002418082-a4443e08c471?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800',
-                material: '羊毛',
-                style: '波斯',
-                scene: '会客厅',
-                colors: ['红色', '蓝色'],
-                aiAnalysis: '经典与现代的完美结合，彰显品味'
-            },
-            {
-                id: 5,
-                name: 'Abstract Flow',
-                brand: 'CC-Tapis',
-                price: '¥68,000',
-                desc: '抽象流动图案，艺术级设计，每件都是独一无二的艺术品。',
-                image: 'https://images.unsplash.com/photo-1562664377-709f2c337eb2?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800',
-                material: '竹纤维',
-                style: '艺术',
-                scene: '画廊',
-                colors: ['多彩'],
-                aiAnalysis: '艺术空间的点睛之笔，视觉焦点'
-            },
-            {
-                id: 6,
-                name: 'Minimalist Lines',
-                brand: 'The Rug Company',
-                price: '¥35,000',
-                desc: '极简线条设计，黑白对比，现代都市风格的首选。',
-                image: 'https://images.unsplash.com/photo-1600166898405-da9535204843?w=800',
-                sceneImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
-                material: '羊毛',
-                style: '极简',
-                scene: '办公室',
-                colors: ['黑色', '白色'],
-                aiAnalysis: '商务空间的理想选择，专业而时尚'
-            }
-        ];
+    <!-- 添加监控源模态框 -->
+    <div id="source-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6">
+        <div class="glass rounded-2xl p-8 max-w-md w-full relative">
+            <button onclick="document.getElementById('source-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="font-serif text-2xl mb-6">添加监控网站</h3>
+            <form id="add-source-form" class="space-y-4">
+                <input type="text" name="name" placeholder="网站名称 (如: The Rug Company)" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <input type="url" name="url" placeholder="网址 (https://...)" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-red focus:outline-none">
+                <button type="submit" class="w-full bg-red hover:bg-red-700 py-3 rounded-lg transition font-medium">添加</button>
+            </form>
+        </div>
+    </div>
 
-        let studioPlatform = '';
-        let studioScene = '';
+    <script>
+        const API_BASE = '/api';
+        let carpetData = [];
 
         // 初始化
-        function init() {
-            renderNewArrivals();
-            renderMagazine();
-            initContentStudio();
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCarpets();
+            loadSources();
+            
+            // 表单提交事件
+            document.getElementById('add-carpet-form').addEventListener('submit', handleAddCarpet);
+            document.getElementById('add-source-form').addEventListener('submit', handleAddSource);
+        });
+
+        // 加载地毯数据
+        async function loadCarpets() {
+            const grid = document.getElementById('products-grid');
+            const loading = document.getElementById('loading-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            loading.classList.remove('hidden');
+            grid.classList.add('hidden');
+            
+            try {
+                const response = await fetch(`${API_BASE}/carpets`);
+                if (!response.ok) throw new Error('API Error');
+                
+                carpetData = await response.json();
+                statusText.textContent = `已连接数据库 · 共 ${carpetData.length} 款新品`;
+                
+                renderCarpets();
+            } catch (error) {
+                console.error('加载失败:', error);
+                statusText.textContent = '数据库连接失败，使用本地数据';
+                // 使用备用数据
+                carpetData = [
+                    {id: 1, name: '示例地毯', brand: '示例品牌', price: '¥0', image_url: 'https://via.placeholder.com/400x500', material: '羊毛', style: '现代', description: '请配置Supabase数据库'},
+                ];
+                renderCarpets();
+            } finally {
+                loading.classList.add('hidden');
+                grid.classList.remove('hidden');
+            }
         }
 
-        // 渲染实时新品
-        function renderNewArrivals() {
+        // 渲染地毯
+        function renderCarpets() {
             const grid = document.getElementById('products-grid');
-            if (!grid) return;
+            if (carpetData.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-500 py-20">暂无数据，请点击"添加新品"</div>';
+                return;
+            }
             
-            grid.innerHTML = carpetData.map((item, index) => `
-                <div class="glass rounded-2xl overflow-hidden group cursor-pointer hover:bg-white/5 transition" onclick="showProductDetail(${item.id})">
+            grid.innerHTML = carpetData.map(item => `
+                <div class="glass rounded-2xl overflow-hidden group">
                     <div class="aspect-[4/5] overflow-hidden relative">
-                        <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${item.name}">
-                        <div class="absolute top-3 right-3 bg-black/50 backdrop-blur px-2 py-1 rounded text-xs">
-                            ${index < 3 ? '<span class="text-red font-bold">NEW</span>' : item.brand}
-                        </div>
+                        <img src="${item.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${item.name}" onerror="this.src='https://via.placeholder.com/400x500?text=No+Image'">
+                        <div class="absolute top-3 right-3 bg-black/50 backdrop-blur px-2 py-1 rounded text-xs">${item.brand}</div>
                     </div>
                     <div class="p-6">
                         <div class="flex justify-between items-start mb-2">
-                            <p class="text-xs text-gray-500">${item.brand}</p>
+                            <span class="text-xs text-gray-500">${item.material || '未知材质'}</span>
                             <span class="text-red font-bold">${item.price}</span>
                         </div>
-                        <h3 class="font-serif text-xl mb-2 group-hover:text-red transition-colors">${item.name}</h3>
-                        <p class="text-sm text-gray-400 line-clamp-2 mb-3">${item.desc}</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 rounded-full bg-white/5 text-xs text-gray-400">${item.material}</span>
-                            <span class="px-2 py-1 rounded-full bg-white/5 text-xs text-gray-400">${item.style}</span>
+                        <h3 class="font-serif text-xl mb-2">${item.name}</h3>
+                        <p class="text-sm text-gray-400 line-clamp-2 mb-3">${item.description || '暂无描述'}</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 rounded-full bg-white/5 text-xs text-gray-400">${item.style || '现代'}</span>
+                            <span class="px-2 py-1 rounded-full bg-white/5 text-xs text-gray-400">${item.scene || '客厅'}</span>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 渲染杂志
-        function renderMagazine() {
-            const content = document.getElementById('magazine-content');
-            if (!content) return;
+        // 添加地毯
+        async function handleAddCarpet(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
             
-            content.innerHTML = carpetData.slice(0, 4).map((item, i) => `
-                <article class="break-inside-avoid">
-                    <div class="grid md:grid-cols-2 gap-8 items-center">
-                        <div class="aspect-square overflow-hidden rounded-2xl">
-                            <img src="${item.image}" class="w-full h-full object-cover hover:scale-105 transition duration-700" alt="${item.name}">
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4">
-                                <span class="text-red font-serif text-4xl font-bold">0${i + 1}</span>
-                                <div class="h-px flex-1 bg-white/20"></div>
-                                <span class="text-gray-500 text-sm">${item.brand}</span>
-                            </div>
-                            <h3 class="font-serif text-3xl">${item.name}</h3>
-                            <p class="text-red text-xl">${item.price}</p>
-                            <p class="text-gray-400 leading-relaxed">${item.desc}</p>
-                            <div class="pt-4 border-t border-white/10">
-                                <p class="text-sm text-gray-500 mb-2">AI 搭配建议：</p>
-                                <p class="text-sm text-gray-300">${item.aiAnalysis}</p>
-                            </div>
-                            <div class="flex gap-2">
-                                ${item.colors.map(color => `<span class="px-3 py-1 rounded-full bg-white/5 text-xs">${color}</span>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
+            // 处理数组字段
+            data.colors = ['默认']; // 简化处理
             
-            document.getElementById('cover-count').textContent = carpetData.length;
-        }
-
-        // 显示产品详情（简易版）
-        function showProductDetail(id) {
-            const item = carpetData.find(c => c.id === id);
-            if (!item) return;
-            
-            // 简单的 alert 展示，实际可以做成模态框
-            alert(`${item.name}\n\n品牌：${item.brand}\n价格：${item.price}\n材质：${item.material}\n\n${item.desc}\n\nAI分析：${item.aiAnalysis}`);
-        }
-
-        // 初始化内容工坊
-        function initContentStudio() {
-            const select = document.getElementById('studio-carpet');
-            if (!select) return;
-            
-            carpetData.forEach(item => {
-                select.innerHTML += `<option value="${item.id}">${item.name} - ${item.brand}</option>`;
-            });
-        }
-
-        // 选择平台
-        function selectStudioPlatform(platform) {
-            studioPlatform = platform;
-            document.querySelectorAll('.studio-platform').forEach(btn => {
-                btn.classList.remove('border-red', 'bg-red/10');
-            });
-            const btn = document.getElementById('btn-' + platform);
-            if (btn) btn.classList.add('border-red', 'bg-red/10');
-        }
-
-        // 选择场景
-        function selectStudioScene(scene) {
-            studioScene = scene;
-            document.querySelectorAll('.studio-scene').forEach(btn => {
-                btn.classList.remove('border-red', 'bg-red/10');
-            });
-            event.target.classList.add('border-red', 'bg-red/10');
-        }
-
-        // 生成内容
-        function generateStudioContent() {
-            const carpetId = document.getElementById('studio-carpet').value;
-            const output = document.getElementById('studio-output');
-            const status = document.getElementById('studio-status');
-            
-            if (!carpetId) {
-                alert('请选择地毯产品');
-                return;
-            }
-            if (!studioPlatform) {
-                alert('请选择平台');
-                return;
-            }
-            
-            const carpet = carpetData.find(c => c.id == carpetId);
-            if (!carpet) return;
-            
-            // 显示加载状态
-            status.textContent = '生成中...';
-            output.innerHTML = `
-                <div class="flex items-center justify-center py-20">
-                    <div class="animate-spin w-8 h-8 border-2 border-red border-t-transparent rounded-full mr-3"></div>
-                    <span class="text-gray-400">AI正在创作内容...</span>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                status.textContent = '完成';
-                if (studioPlatform === 'xiaohongshu') {
-                    output.innerHTML = generateXiaohongshuPost(carpet);
+            try {
+                const response = await fetch(`${API_BASE}/carpets`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('添加成功！');
+                    document.getElementById('add-modal').classList.add('hidden');
+                    e.target.reset();
+                    loadCarpets(); // 刷新列表
                 } else {
-                    output.innerHTML = generateInstagramPost(carpet);
+                    throw new Error('添加失败');
                 }
-            }, 1500);
+            } catch (error) {
+                alert('错误：' + error.message);
+            }
         }
 
-        // 生成小红书文案
-        function generateXiaohongshuPost(carpet) {
-            const titles = [
-                `🏠 ${carpet.scene}改造｜${carpet.name}让家瞬间高级`,
-                `✨ 软装分享｜这张${carpet.material}地毯是我家最正确的决定`,
-                `🛋️ ${carpet.style}风必备｜${carpet.brand}新品推荐`,
-                `💡 装修灵感｜${carpet.name}太绝了`
-            ];
-            
-            return `
-                <div class="space-y-4">
-                    <div class="bg-red/5 border border-red/20 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xl">📕</span>
-                            <span class="text-red text-sm font-medium">小红书文案</span>
+        // 加载监控源
+        async function loadSources() {
+            const list = document.getElementById('sources-list');
+            try {
+                const response = await fetch(`${API_BASE}/sources`);
+                const sources = await response.json();
+                
+                if (sources.length === 0) {
+                    list.innerHTML = '<div class="text-center text-gray-500 py-8">暂无监控源，请点击右上角添加</div>';
+                    return;
+                }
+                
+                list.innerHTML = sources.map(source => `
+                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl hover:bg-white/10 transition">
+                        <div>
+                            <p class="font-medium">${source.name}</p>
+                            <p class="text-sm text-gray-500">${source.url}</p>
                         </div>
-                        <h4 class="font-bold text-lg mb-3">${titles[Math.floor(Math.random() * titles.length)]}</h4>
-                        <div class="text-sm text-gray-300 space-y-2 leading-relaxed whitespace-pre-line">
-姐妹们！最近入手的这张地毯真的太绝了😭
-
-【${carpet.name}】来自 ${carpet.brand}
-${carpet.desc}
-
-放在${carpet.scene}里，整个空间的质感都提升了✨
-${carpet.aiAnalysis}
-
-·
-💰 价格：${carpet.price}
-🎨 颜色：${carpet.colors.join(' ')}
-🏷️ 材质：${carpet.material}
-📐 适用：${carpet.scene}
-
-·
-#地毯推荐 #家居软装 #${carpet.style}风格 #${carpet.scene}装修 #品质生活 #${carpet.brand.replace(/\s/g, '')} #装修灵感 #室内设计</div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="copyContent(this)" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded text-sm transition">📋 复制文案</button>
-                        <button onclick="downloadImage('${carpet.image}')" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded text-sm transition">🖼️ 下载主图</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 生成Instagram文案
-        function generateInstagramPost(carpet) {
-            return `
-                <div class="space-y-4">
-                    <div class="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-white/10 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xl">📷</span>
-                            <span class="text-purple-400 text-sm font-medium">Instagram Caption</span>
-                        </div>
-                        <div class="text-sm text-gray-300 space-y-2 leading-relaxed">
-Transform your ${carpet.scene} with the exquisite ${carpet.name} from ${carpet.brand} ✨
-
-${carpet.desc}
-
-Perfect for ${studioScene || 'modern'} interiors, this ${carpet.material} masterpiece brings timeless elegance.
-
-💭 Designer Note: ${carpet.aiAnalysis}
-
-·
-Price: ${carpet.price}
-Colors: ${carpet.colors.join(' | ')}
-
-·
-#InteriorDesign #CarpetDesign #HomeDecor #LuxuryLiving #${carpet.brand.replace(/\s/g, '')} #DesignInspiration #TextileArt #${studioScene || 'Modern'}Home</div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="copyContent(this)" class="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded text-sm transition">📋 Copy</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 以图搜图
-        function handleVisualSearch(input) {
-            if (!input.files || !input.files[0]) return;
-            
-            const resultsDiv = document.getElementById('search-results');
-            const productsDiv = document.getElementById('similar-products');
-            
-            resultsDiv.classList.remove('hidden');
-            productsDiv.innerHTML = `
-                <div class="col-span-3 text-center py-12">
-                    <div class="animate-spin w-8 h-8 border-2 border-red border-t-transparent rounded-full mx-auto mb-4"></div>
-                    <p class="text-gray-400">AI正在分析图片特征...</p>
-                    <p class="text-sm text-gray-600 mt-2">提取颜色、图案、风格信息</p>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                const shuffled = [...carpetData].sort(() => 0.5 - Math.random()).slice(0, 3);
-                productsDiv.innerHTML = shuffled.map((item, idx) => `
-                    <div class="glass rounded-lg overflow-hidden">
-                        <div class="aspect-square relative">
-                            <img src="${item.image}" class="w-full h-full object-cover" alt="${item.name}">
-                            <div class="absolute top-2 right-2 bg-red text-xs px-2 py-1 rounded">
-                                ${90 - idx * 5}% 相似
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-medium text-sm mb-1">${item.name}</h4>
-                            <p class="text-red text-sm">${item.price}</p>
-                            <p class="text-xs text-gray-500 mt-1">${item.brand}</p>
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center gap-1 text-green-500 text-sm">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                ${source.status}
+                            </span>
+                            <button onclick="deleteSource(${source.id})" class="p-2 hover:bg-red/10 rounded-lg text-red transition" title="删除">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
                         </div>
                     </div>
                 `).join('');
-            }, 2000);
-        }
-
-        // 复制内容
-        function copyContent(btn) {
-            const text = btn.closest('.space-y-4').querySelector('.text-sm').innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const original = btn.textContent;
-                btn.textContent = '✓ 已复制';
-                btn.classList.add('bg-green-500/20', 'text-green-500');
-                setTimeout(() => {
-                    btn.textContent = original;
-                    btn.classList.remove('bg-green-500/20', 'text-green-500');
-                }, 2000);
-            });
-        }
-
-        // 下载图片
-        function downloadImage(url) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'carpet-image.jpg';
-            a.target = '_blank';
-            a.click();
-        }
-
-        // 排序功能
-        function sortNewArrivals() {
-            const sortType = document.getElementById('sort-new-arrivals').value;
-            console.log('排序方式：', sortType);
-            // 实际应根据价格排序，这里仅演示
-            renderNewArrivals();
-        }
-
-        // 刷新
-        function refreshNewArrivals() {
-            const btn = event.target.closest('button');
-            btn.classList.add('animate-spin');
-            setTimeout(() => {
-                btn.classList.remove('animate-spin');
-                alert('已获取最新数据！');
-            }, 1000);
-        }
-
-        // 加载更多
-        function loadMoreNewArrivals() {
-            alert('加载更多新品...（实际应从API获取分页数据）');
-        }
-
-        // 添加网站
-        function addWebsite() {
-            const url = prompt('请输入要监控的网站地址：');
-            if (url) {
-                alert('已添加：' + url + '\n\n注意：实际监控需要配合后端爬虫服务');
+            } catch (error) {
+                list.innerHTML = '<div class="text-center text-red-500 py-8">加载失败，请检查数据库连接</div>';
             }
         }
 
-        // 订阅
-        function subscribe() {
-            const email = document.querySelector('#email-modal input').value;
-            if (!email) {
-                alert('请输入邮箱地址');
-                return;
+        // 添加监控源
+        async function handleAddSource(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(`${API_BASE}/sources`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('添加成功！');
+                    document.getElementById('source-modal').classList.add('hidden');
+                    e.target.reset();
+                    loadSources();
+                } else {
+                    throw new Error('添加失败');
+                }
+            } catch (error) {
+                alert('错误：' + error.message);
             }
-            alert('订阅成功！每周一早上9点会收到最新杂志。');
-            document.getElementById('email-modal').classList.add('hidden');
         }
 
-        // 启动
-        document.addEventListener('DOMContentLoaded', init);
+        // 删除监控源
+        async function deleteSource(id) {
+            if (!confirm('确定要删除这个监控源吗？')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/sources?id=${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadSources();
+                } else {
+                    throw new Error('删除失败');
+                }
+            } catch (error) {
+                alert('错误：' + error.message);
+            }
+        }
     </script>
 </body>
 </html>
