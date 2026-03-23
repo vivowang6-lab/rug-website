@@ -49,12 +49,21 @@
             .glass { background: white !important; border: 1px solid #ddd !important; }
             .text-red { color: #c70512 !important; }
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1a1a1a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #e30614; }
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e30614;
+        }
     </style>
-<base target="_blank">
 </head>
 <body class="min-h-screen">
 
@@ -79,6 +88,7 @@
                 <a href="#content-studio" class="px-4 py-2 rounded-lg text-sm text-red hover:bg-red/10 transition">AI内容工坊</a>
                 <a href="#visual-search" class="px-4 py-2 rounded-lg text-sm text-red hover:bg-red/10 transition">以图搜图</a>
                 <a href="#trends" class="px-4 py-2 rounded-lg text-sm text-red hover:bg-red/10 transition">趋势预测</a>
+                <a href="#manage" class="px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition">管理</a>
             </div>
 
             <button class="md:hidden p-2 rounded-lg hover:bg-white/5" onclick="toggleMobileMenu()">
@@ -86,11 +96,15 @@
             </button>
         </div>
         
+        <!-- 移动端菜单 -->
         <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-black/95">
             <div class="px-6 py-4 space-y-2">
                 <a href="#gallery" class="block py-2 text-gray-400 hover:text-white">风格画廊</a>
                 <a href="#magazine" class="block py-2 text-gray-400 hover:text-white">本周杂志</a>
                 <a href="#content-studio" class="block py-2 text-red">AI内容工坊</a>
+                <a href="#visual-search" class="block py-2 text-red">以图搜图</a>
+                <a href="#trends" class="block py-2 text-red">趋势预测</a>
+                <a href="#manage" class="block py-2 text-gray-400 hover:text-white">管理</a>
             </div>
         </div>
     </nav>
@@ -157,58 +171,27 @@
                     <button onclick="filterCategory('modern')" class="category-tab px-4 py-2 text-sm rounded-lg hover:bg-white/5 transition">现代简约</button>
                     <button onclick="filterCategory('persian')" class="category-tab px-4 py-2 text-sm rounded-lg hover:bg-white/5 transition">波斯传统</button>
                     <button onclick="filterCategory('geometric')" class="category-tab px-4 py-2 text-sm rounded-lg hover:bg-white/5 transition">几何抽象</button>
+                    <button onclick="filterCategory('luxury')" class="category-tab px-4 py-2 text-sm rounded-lg hover:bg-white/5 transition">奢华丝绸</button>
                 </div>
             </div>
 
             <div id="products-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- 示例产品卡片 -->
-                <div class="glass rounded-2xl overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-[1.02]">
-                    <div class="aspect-square bg-gray-800 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-600">
-                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <div class="absolute top-3 right-3">
-                            <span class="px-2 py-1 bg-red text-xs rounded font-medium">NEW</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">现代几何羊毛毯</h3>
-                        <p class="text-sm text-gray-400 mb-3">极简线条 · 新西兰羊毛</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red font-bold">¥12,800</span>
-                            <span class="text-xs text-gray-500">2小时前更新</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass rounded-2xl overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-[1.02]">
-                    <div class="aspect-square bg-gray-800 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-amber-900/30 to-gray-900"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">波斯手工真丝毯</h3>
-                        <p class="text-sm text-gray-400 mb-3">传统纹样 · 手工打结</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red font-bold">¥45,000</span>
-                            <span class="text-xs text-gray-500">5小时前更新</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- 动态加载 -->
+            </div>
+        </div>
+    </section>
 
-                <div class="glass rounded-2xl overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-[1.02]">
-                    <div class="aspect-square bg-gray-800 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-gray-900"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">抽象艺术地毯</h3>
-                        <p class="text-sm text-gray-400 mb-3">设计师款 · 天丝混纺</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red font-bold">¥8,600</span>
-                            <span class="text-xs text-gray-500">1天前更新</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- 场景搭配 -->
+    <section class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-[#0a0a0a] to-[#111]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-red text-sm tracking-wider mb-2 font-medium">ROOM SCENES</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">AI场景搭配</h2>
+                <p class="text-gray-400">智能匹配地毯与室内场景，一键生成搭配方案</p>
+            </div>
+
+            <div id="scenes-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 动态加载 -->
             </div>
         </div>
     </section>
@@ -223,57 +206,240 @@
                     AI CONTENT STUDIO
                 </span>
                 <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">AI内容自动化生产</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">一键生成小红书/Instagram高质量内容，自动匹配场景风格</p>
+                <p class="text-gray-400 max-w-2xl mx-auto">一键生成小红书/Instagram高质量内容，自动匹配场景风格，支持批量生产</p>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-8">
-                <div class="glass rounded-2xl p-6 space-y-6">
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-3 font-medium">1. 选择平台</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button class="p-4 rounded-xl border border-white/10 hover:border-red/50 transition text-center bg-white/5">
-                                <div class="text-2xl mb-2">📕</div>
-                                <div class="font-medium">小红书</div>
-                            </button>
-                            <button class="p-4 rounded-xl border border-white/10 hover:border-red/50 transition text-center">
-                                <div class="text-2xl mb-2">📷</div>
-                                <div class="font-medium">Instagram</div>
-                            </button>
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- 左侧输入区 -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass rounded-2xl p-6 space-y-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-3 font-medium">1. 选择地毯产品</label>
+                            <select id="studio-carpet" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-red focus:outline-none transition">
+                                <option value="">请选择要推广的地毯...</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-3 font-medium">2. 选择场景风格</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button class="px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">现代极简</button>
-                            <button class="px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">奢华别墅</button>
-                            <button class="px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">温馨家居</button>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-3 font-medium">2. 选择平台</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button type="button" onclick="selectStudioPlatform('xiaohongshu')" id="btn-xiaohongshu" class="studio-platform p-4 rounded-xl border border-white/10 hover:border-red/50 transition text-center group">
+                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">📕</div>
+                                    <div class="font-medium">小红书</div>
+                                    <div class="text-xs text-gray-500 mt-1">生活方式种草</div>
+                                </button>
+                                <button type="button" onclick="selectStudioPlatform('instagram')" id="btn-instagram" class="studio-platform p-4 rounded-xl border border-white/10 hover:border-red/50 transition text-center group">
+                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">📷</div>
+                                    <div class="font-medium">Instagram</div>
+                                    <div class="text-xs text-gray-500 mt-1">视觉美学展示</div>
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <button class="w-full bg-red hover:bg-red-dark py-4 rounded-xl transition font-bold flex items-center justify-center gap-2 shadow-lg shadow-red/20">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        生成内容
-                    </button>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-3 font-medium">3. 选择场景风格</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="selectStudioScene('modern')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">现代极简</button>
+                                <button type="button" onclick="selectStudioScene('luxury')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">奢华别墅</button>
+                                <button type="button" onclick="selectStudioScene('cozy')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">温馨家居</button>
+                                <button type="button" onclick="selectStudioScene('artistic')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">艺术空间</button>
+                                <button type="button" onclick="selectStudioScene('nordic')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">北欧风</button>
+                                <button type="button" onclick="selectStudioScene('chinese')" class="studio-scene px-3 py-3 rounded-xl border border-white/10 text-sm hover:border-red/50 hover:bg-white/5 transition">新中式</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-3 font-medium">4. 内容设置</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" checked class="w-4 h-4 rounded border-white/20 bg-black/50 text-red focus:ring-red">
+                                    <span class="text-sm">生成场景搭配图</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" checked class="w-4 h-4 rounded border-white/20 bg-black/50 text-red focus:ring-red">
+                                    <span class="text-sm">包含产品参数</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded border-white/20 bg-black/50 text-red focus:ring-red">
+                                    <span class="text-sm">添加热门标签</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button onclick="generateStudioContent()" class="w-full bg-red hover:bg-red-dark py-4 rounded-xl transition font-bold flex items-center justify-center gap-2 shadow-lg shadow-red/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            生成内容
+                        </button>
+                    </div>
                 </div>
 
-                <div class="glass rounded-2xl p-6">
-                    <h3 class="font-bold text-lg mb-6">生成结果预览</h3>
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-xl bg-black/30 border border-white/10">
-                            <div class="flex items-start gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-red/20 flex items-center justify-center text-red font-bold">AI</div>
-                                <div>
-                                    <p class="font-medium">小红书文案</p>
-                                    <p class="text-sm text-gray-500">已针对家居种草优化</p>
+                <!-- 右侧输出区 -->
+                <div class="lg:col-span-3">
+                    <div class="glass rounded-2xl p-6 h-full min-h-[600px]">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-bold text-lg">生成结果</h3>
+                            <span id="studio-status" class="text-xs text-gray-500"></span>
+                        </div>
+                        <div id="studio-output" class="space-y-4">
+                            <div class="flex flex-col items-center justify-center h-full text-gray-500 py-32">
+                                <div class="w-24 h-24 rounded-full bg-white/5 flex items-center justify-center mb-6">
+                                    <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                                 </div>
+                                <p class="text-lg mb-2">AI内容工坊就绪</p>
+                                <p class="text-sm text-gray-600">选择参数后点击生成，AI将自动创作</p>
                             </div>
-                            <p class="text-sm text-gray-300 leading-relaxed bg-white/5 p-3 rounded-lg">
-                                ✨ 客厅颜值担当 | 这张地毯让整个空间都温柔了<br><br>
-                                刚铺上就忍不住拍照📸<br>
-                                新西兰羊毛脚感绝了，赤脚踩上去像在云端...<br><br>
-                                #家居好物 #地毯推荐 #客厅装修 #软装搭配
-                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 批量生成日历 -->
+            <div class="mt-12">
+                <h3 class="font-bold text-lg mb-6">内容日历（本周计划）</h3>
+                <div class="grid grid-cols-7 gap-3" id="content-calendar">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 以图搜图 -->
+    <section id="visual-search" class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-[#0a0a0a] to-[#111]">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 border border-red/20 text-red text-sm mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                VISUAL SEARCH
+            </span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">以图搜图</h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">上传心仪地毯图片，AI视觉分析 instantly 找到相似款，并提供定制建议</p>
+            
+            <div class="glass rounded-3xl p-12 border-2 border-dashed border-white/20 hover:border-red/50 transition-all duration-300 cursor-pointer group relative overflow-hidden" onclick="document.getElementById('search-upload').click()">
+                <input type="file" id="search-upload" class="hidden" accept="image/*" onchange="handleVisualSearch(this)">
+                
+                <div class="absolute inset-0 bg-gradient-to-br from-red/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-12 h-12 text-gray-500 group-hover:text-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-xl mb-2 font-medium">点击上传图片或拖拽至此</p>
+                    <p class="text-sm text-gray-500 mb-4">支持 JPG、PNG 格式，最大 10MB</p>
+                    <div class="flex justify-center gap-2 text-xs text-gray-600">
+                        <span class="px-3 py-1 rounded-full bg-white/5">AI色彩分析</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5">图案识别</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5">风格匹配</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="search-results" class="mt-12 hidden text-left">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">找到相似地毯 <span id="search-count" class="text-red text-sm ml-2">3款</span></h3>
+                    <button onclick="document.getElementById('search-results').classList.add('hidden')" class="text-sm text-gray-500 hover:text-white">清除结果</button>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6" id="similar-products"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 趋势预测 -->
+    <section id="trends" class="py-20 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red/10 border border-red/20 text-red text-sm mb-4">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        TREND FORECAST
+                    </span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-2">AI趋势预测</h2>
+                    <p class="text-gray-400">基于全球社交媒体数据，预测下一季度流行趋势</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500">数据来源</p>
+                    <div class="flex gap-3 mt-2">
+                        <span class="text-2xl" title="Pinterest">📌</span>
+                        <span class="text-2xl" title="Instagram">📷</span>
+                        <span class="text-2xl" title="小红书">📕</span>
+                        <span class="text-2xl" title="Google Trends">📊</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="glass rounded-2xl p-8 text-center relative overflow-hidden group hover:bg-white/5 transition">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red/10 rounded-full blur-[60px] group-hover:bg-red/20 transition"></div>
+                    <div class="relative z-10">
+                        <div class="text-5xl mb-4">🔥</div>
+                        <h3 class="text-gray-400 text-sm mb-2">本季流行色</h3>
+                        <p class="text-3xl font-serif font-bold text-red mb-2">暖沙色</p>
+                        <p class="text-green-500 text-sm">↑ 240% 搜索增长</p>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center relative overflow-hidden group hover:bg-white/5 transition">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-[60px] group-hover:bg-blue-500/20 transition"></div>
+                    <div class="relative z-10">
+                        <div class="text-5xl mb-4">📈</div>
+                        <h3 class="text-gray-400 text-sm mb-2">热门图案</h3>
+                        <p class="text-3xl font-serif font-bold text-blue-400 mb-2">抽象几何</p>
+                        <p class="text-green-500 text-sm">↑ 180% 标签增长</p>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center relative overflow-hidden group hover:bg-white/5 transition">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[60px] group-hover:bg-purple-500/20 transition"></div>
+                    <div class="relative z-10">
+                        <div class="text-5xl mb-4">🔮</div>
+                        <h3 class="text-gray-400 text-sm mb-2">下季预测</h3>
+                        <p class="text-3xl font-serif font-bold text-purple-400 mb-2">复古波斯</p>
+                        <p class="text-green-500 text-sm">↑ 320% 笔记增长</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-xl font-bold">2024 Q1 地毯行业趋势报告</h3>
+                    <button class="text-sm text-red hover:underline">下载完整报告 PDF</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-12 h-12 rounded-full bg-red/20 flex items-center justify-center text-red font-bold text-lg group-hover:bg-red group-hover:text-white transition">1</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-1">自然材质回归</h4>
+                            <p class="text-gray-400 text-sm mb-2">羊毛、棉麻、黄麻等天然材质搜索量大幅增长，消费者更关注环保与可持续性</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs px-2 py-1 rounded bg-green-500/10 text-green-500">↑ 156%</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#可持续</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#天然材质</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-12 h-12 rounded-full bg-red/20 flex items-center justify-center text-red font-bold text-lg group-hover:bg-red group-hover:text-white transition">2</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-1">大尺寸地毯需求激增</h4>
+                            <p class="text-gray-400 text-sm mb-2">开放式空间设计流行，3m x 4m 以上大尺寸地毯成为客厅标配</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs px-2 py-1 rounded bg-green-500/10 text-green-500">↑ 89%</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#大尺寸</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#客厅</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-12 h-12 rounded-full bg-red/20 flex items-center justify-center text-red font-bold text-lg group-hover:bg-red group-hover:text-white transition">3</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-lg mb-1">渐变色彩设计</h4>
+                            <p class="text-gray-400 text-sm mb-2">从中心向边缘渐变的色彩设计成为新宠，为空间增添层次感</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs px-2 py-1 rounded bg-green-500/10 text-green-500">↑ 67%</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#渐变</span>
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-400">#色彩</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -281,19 +447,135 @@
         </div>
     </section>
 
-    <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-        
-        function filterCategory(cat) {
-            // 切换分类标签样式
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-    </script>
-</body>
-</html>
+    <!-- 本周杂志 -->
+    <section id="magazine" class="py-20 px-6 border-t border-white/10 bg-gradient-to-b from-[#0a0a0a] to-[#111]">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+                <div>
+                    <p class="text-red text-sm tracking-wider mb-2 font-medium">WEEKLY MAGAZINE</p>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold">本期精选</h2>
+                </div>
+                <div class="flex gap-3 no-print">
+                    <button onclick="window.print()" class="bg-red hover:bg-red-dark px-6 py-3 rounded-xl transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        下载 PDF
+                    </button>
+                    <button onclick="shareMagazine()" class="border border-white/20 hover:bg-white/5 px-6 py-3 rounded-xl transition">
+                        分享
+                    </button>
+                </div>
+            </div>
+
+            <!-- 杂志封面 -->
+            <div class="relative mb-16 p-12 md:p-20 border border-white/20 bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-2xl overflow-hidden" id="magazine-cover">
+                <div class="absolute inset-0 opacity-30">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-red/20 rounded-full blur-[100px]"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px]"></div>
+                </div>
+                
+                <div class="relative z-10 text-center">
+                    <div class="flex justify-between items-center mb-12 text-xs tracking-[0.3em] text-gray-500">
+                        <span class="text-red">ISSUE <span id="issue-no">01</span></span>
+                        <span id="cover-date">2024.01.15 - 01.21</span>
+                    </div>
+                    
+                    <h2 class="font-serif text-6xl md:text-8xl font-bold mb-4 tracking-tight">VOGUE</h2>
+                    <p class="text-2xl md:text-3xl tracking-[0.5em] text-gray-400 uppercase mb-8">Carpet Edition</p>
+                    
+                    <div class="w-24 h-px bg-gradient-to-r from-transparent via-red to-transparent mx-auto mb-8"></div>
+                    
+                    <p class="text-gray-400 max-w-md mx-auto mb-12">
+                        本期精选 <span id="cover-count" class="text-white font-bold text-2xl">12</span> 款设计师地毯
+                        <br>涵盖 <span id="cover-styles" class="text-white font-bold">5</span> 大风格类别
+                    </p>
+                    
+                    <div class="flex justify-center gap-8 text-sm">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-red">24</div>
+                            <div class="text-gray-500 text-xs mt-1">款新品</div>
+                        </div>
+                        <div class="w-px bg-white/10"></div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-red">5</div>
+                            <div class="text-gray-500 text-xs mt-1">个品牌</div>
+                        </div>
+                        <div class="w-px bg-white/10"></div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-red">AI</div>
+                            <div class="text-gray-500 text-xs mt-1">智能精选</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 杂志目录 -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16" id="magazine-toc">
+                <!-- 动态生成 -->
+            </div>
+
+            <!-- 杂志内容 -->
+            <div id="magazine-content" class="space-y-24">
+                <!-- 动态插入内容 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 管理后台 -->
+    <section id="manage" class="py-20 px-6 border-t border-white/10 no-print">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-red text-sm tracking-wider mb-2 font-medium">MANAGE</p>
+                <h2 class="font-serif text-4xl font-bold mb-2">监控源管理</h2>
+                <p class="text-gray-400">管理自动监控的地毯网站</p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-lg">已监控网站</h3>
+                    <button onclick="addWebsite()" class="bg-red hover:bg-red-dark px-4 py-2 rounded-lg text-sm transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        添加网站
+                    </button>
+                </div>
+                
+                <div id="website-list" class="space-y-3">
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                            </div>
+                            <div>
+                                <p class="font-medium">The Rug Company</p>
+                                <p class="text-sm text-gray-500">therugcompany.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs text-gray-500">每2小时检查</span>
+                            <span class="flex items-center gap-1 text-green-500 text-sm">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                正常
+                            </span>
+                            <button class="opacity-0 group-hover:opacity-100 p-2 hover:bg-red/10 rounded-lg text-red transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                            </div>
+                            <div>
+                                <p class="font-medium">Tai Ping Carpets</p>
+                                <p class="text-sm text-gray-500">taipingcarpets.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs text-gray-500">每2小时检查</span>
+                            <span class="flex items-center gap-1 text-green-500 text-sm">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                正常
+                            </span>
+                            <button class="opacity-0 group-hover:opacity-100 p-2 hover:bg-red/10 rounded-lg text-red transition">
+                                <svg class="w-4 h-4
